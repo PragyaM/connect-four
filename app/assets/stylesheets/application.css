@@ -40,8 +40,17 @@ body {
 	text-transform: uppercase;
 }
 
-input[type=submit]:hover{
+input[type=submit]:hover {
 	color: white;
 	text-transform: uppercase;
 	cursor: pointer;
+}
+
+#grid {
+    margin-left:auto; 
+    margin-right:auto;
+}
+
+td {
+	padding: 20px
 }

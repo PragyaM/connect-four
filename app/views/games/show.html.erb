@@ -1,3 +1,17 @@
 <%= render partial: "header" %>
 
 <p> It is <%= current_player_name(@game) %>'s turn </p>
+
+<table id="grid">
+	<% (Game::GRID_HEIGHT + 1).downto(0) do |row| %>
+		<tr>
+			<% Game::GRID_WIDTH.times do |lane| %>
+				<% if row > Game::GRID_HEIGHT %>
+					<td><button type="button">drop</button></td>
+				<% else %>
+					<td><label for="slot"><%= item_for_slot(@game, @grid, lane, row) %></label></td>
+				<% end %>
+			<% end %>
+		</tr>
+	<% end %>
+</table>
