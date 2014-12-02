@@ -32,7 +32,7 @@ class Game < ActiveRecord::Base
       player_1
     else
       last_player_id = turns.last.player_id
-      player_1_ id == last_player_id ? player_2 : player_1
+      player_1_id == last_player_id ? player_2 : player_1
     end
   end
 end
