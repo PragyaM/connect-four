@@ -14,7 +14,9 @@
 ActiveRecord::Schema.define(version: 20141201034340) do
 
   create_table "games", force: true do |t|
-    t.boolean  "finished",   default: false, null: false
+    t.boolean  "finished",    default: false, null: false
+    t.integer  "player_1_id",                 null: false
+    t.integer  "player_2_id",                 null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

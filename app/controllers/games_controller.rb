@@ -5,7 +5,7 @@ class GamesController < ApplicationController
   end
 
   def create # POST /games
-    game = Game.create!
+    game = Game.create!(player_1: Player.create!(name: "Pragya"), player_2: Player.create!)
     redirect_to game
   end
 end
