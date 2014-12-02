@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>ConnectFour</title>
+	    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  		<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+		<%= csrf_meta_tags %>
+		<link href='http://fonts.googleapis.com/css?family=Muli:300,400' rel='stylesheet' type='text/css'>
+	</head>
+	<body>
+
+		<div class="container"><%= yield %></div>
+
+	</body>
+</html>

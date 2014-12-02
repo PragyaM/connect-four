@@ -1,0 +1,47 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+body {
+	font-family: 'Muli', sans-serif;
+}
+
+.container {
+ 	width: 800px;
+ 	margin-left: auto;
+ 	margin-right: auto;
+ 	text-align: center;
+ }
+
+ #main_title {
+ 	font-size: 60px;
+ 	color: #9999de;
+ }
+
+ input[type=submit] {
+	font-size: 20px;
+	border: none;
+	margin: 20px;
+	background: #dd9999;
+	color: #b94a48;
+	padding: 10px; 
+	text-transform: uppercase;
+}
+
+input[type=submit]:hover{
+	color: white;
+	text-transform: uppercase;
+	cursor: pointer;
+}
