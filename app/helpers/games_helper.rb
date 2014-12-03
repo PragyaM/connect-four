@@ -4,7 +4,7 @@ module GamesHelper
   end
 
   def item_for_slot(game, grid, lane, row)
-    if row > grid[lane].size
+    if row >= grid[lane].size
       "0"
     elsif grid[lane][row] == game.player_1_id
       "1"

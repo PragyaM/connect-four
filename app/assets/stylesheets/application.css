@@ -31,9 +31,9 @@ body {
  }
 
  input[type=submit] {
-	font-size: 20px;
+	font-size: 15px;
 	border: none;
-	margin: 20px;
+	margin: 10px;
 	background: #dd9999;
 	color: #b94a48;
 	padding: 10px; 
@@ -46,11 +46,11 @@ input[type=submit]:hover {
 	cursor: pointer;
 }
 
-#grid {
+/*#grid {
     margin-left:auto; 
     margin-right:auto;
 }
 
 td {
 	padding: 20px
-}
+}*/

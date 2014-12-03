@@ -2,16 +2,30 @@
 
 <p> It is <%= current_player_name(@game) %>'s turn </p>
 
-<table id="grid">
-	<% (Game::GRID_HEIGHT + 1).downto(0) do |row| %>
-		<tr>
-			<% Game::GRID_WIDTH.times do |lane| %>
-				<% if row > Game::GRID_HEIGHT %>
-					<td><button type="button">drop</button></td>
-				<% else %>
-					<td><label for="slot"><%= item_for_slot(@game, @grid, lane, row) %></label></td>
-				<% end %>
+
+<div id="grid">
+
+<div id="header">
+	<% Game::GRID_WIDTH.times do |lane| %>
+		<div class="blocks">
+			<%= form_for [@game, Turn.new] do |f| %>
+				<%= f.hidden_field(:lane_number, value: lane.to_i) %>
+				<%= f.hidden_field(:player_id, value: @game
+				.whos_turn?.id.to_i) %>
+				<%= f.submit "drop"%>
 			<% end %>
-		</tr>
+		</div>
 	<% end %>
-</table>
+</div>
+
+<% (Game::GRID_HEIGHT - 1).downto(0) do |row| %>
+	<div class="wrap">
+		<% Game::GRID_WIDTH.times do |lane| %>
+			<div class="blocks">
+				<label for="slot"><%= item_for_slot(@game, @grid, lane, row) %></label>
+			</div>
+		<% end %>
+	</div>
+<% end %>
+
+</div>

@@ -9,10 +9,7 @@ class Turn < ActiveRecord::Base
   end
 
   def validate(lane_number)
-    Game::GRID_WIDTH > lane_number && lane_number >= 0
-  end
-
-  def validate(game)
-    game.room_in_lane?(lane_number)
+    Game::GRID_WIDTH > lane_number && lane_number >= 0 &&
+    game.space_in_lane?(lane_number)
   end
 end
