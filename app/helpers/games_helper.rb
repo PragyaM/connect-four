@@ -3,13 +3,18 @@ module GamesHelper
     game.whos_turn?.name
   end
 
-  def item_for_slot(game, grid, lane, row)
+  def resource_for_slot(game, grid, lane, row)
     if row >= grid[lane].size
-      "0"
+      "empty.png"
     elsif grid[lane][row] == game.player_1_id
-      "1"
+      "coin_pink.png"
     elsif grid[lane][row] == game.player_2_id
-      "2"
+      "coin_green.png"
     end
+  end
+
+  def winner_name(game)
+    winner_id = game.turns.last.player_id
+    Player.find(winner_id).name
   end
 end

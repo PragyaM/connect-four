@@ -2,6 +2,13 @@ class GamesController < ApplicationController
   def show # GET /games/[id]
     @game = Game.find(params[:id])
     @grid = ConstructBoard.new(@game).call
+    if @game.turns.size > 0
+      if CheckConnections.new(@grid, @game.turns.last).call
+        @game.finished = true
+        @game.save!
+        #TODO Disable interaction with the game grid
+      end
+    end
   end
 
   def create # POST /games

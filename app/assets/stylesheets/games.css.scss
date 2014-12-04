@@ -5,10 +5,14 @@
 #grid {
 	margin-left:auto; 
     margin-right:auto;
+    padding-bottom: 20px;
+    background: #eed3d7;
 }
 
 .wrap {
-	width: 800px;
+	width: 730px;
+	margin-left: 35px;
+	background: #eed3d7;
 }
 
 .blocks {
@@ -17,7 +21,6 @@
     height: 90px;
     margin-top: 2px;
     margin-bottom: 2px;
-    border-style: solid;
-    border-color:#eed3d7;
-    align: center
+    align: center;
+    background: #eed3d7;
 }

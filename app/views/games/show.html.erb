@@ -22,10 +22,14 @@
 	<div class="wrap">
 		<% Game::GRID_WIDTH.times do |lane| %>
 			<div class="blocks">
-				<label for="slot"><%= item_for_slot(@game, @grid, lane, row) %></label>
+				<%= image_tag resource_for_slot(@game, @grid, lane, row) %>
 			</div>
 		<% end %>
 	</div>
 <% end %>
 
+
+<% if @game.finished %>
+	<p> <%= "Game over!! #{winner_name(@game)} has connected four!" %> </p>
+<% end %>
 </div>
