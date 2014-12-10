@@ -1,6 +1,6 @@
 module GamesHelper
   def current_player_name(game)
-    game.whos_turn?.name
+    game.current_player.name
   end
 
   def resource_for_slot(game, grid, lane, row)

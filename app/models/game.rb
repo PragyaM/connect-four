@@ -25,7 +25,7 @@ class Game < ActiveRecord::Base
     (ConstructBoard.new(self).call)[lane_number].size < (GRID_HEIGHT - 1)
   end
 
-  def whos_turn?
+  def current_player
     if turns.empty?
       player_1
     else

@@ -1,5 +1,6 @@
 <%= render partial: "header" %>
 
+<% if Game.not_waiting.pluck(current_user).size > 0 %>
 <% if Game.waiting.empty? %>
 	<%= form_for Game.new do |f| %>
 		<% f.submit "New Game" %>

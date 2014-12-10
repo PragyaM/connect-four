@@ -1,12 +1,21 @@
 class GamesController < ApplicationController
   def show # GET /games/[id]
     @game = Game.find(params[:id])
-    @grid = ConstructBoard.new(@game).call
-    if @game.turns.size > 0
-      if CheckConnections.new(@grid, @game.turns.last).call
-        @game.finished = true
-        @game.save!
-        #TODO Disable interaction with the game grid
+
+    respond_to do |format|
+      format.html do
+        @grid = ConstructBoard.new(@game).call
+        if @game.turns.size > 0
+          if CheckConnections.new(@grid, @game.turns.last).call
+            @game.finished = true
+            @game.save! #FIXME: THIS IS BAD
+            #TODO Disable interaction with the game grid
+          end
+        end
+      end
+
+      format.json do
+        render json: {my_turn: @game.current_player == current_user}
       end
     end
   end
