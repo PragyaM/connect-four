@@ -7,14 +7,14 @@ module GamesHelper
     if row >= grid[lane].size
       "empty.png"
     elsif grid[lane][row] == game.player_1_id
-      "coin_pink.png"
+      "better_coin_pink.png"
     elsif grid[lane][row] == game.player_2_id
-      "coin_green.png"
+      "better_coin_green.png"
     end
   end
 
   def winner_name(game)
-    winner_id = game.turns.last.player_id
-    Player.find(winner_id).name
+    winner_id = game.turns.last.user_id
+    User.find(winner_id).name
   end
 end

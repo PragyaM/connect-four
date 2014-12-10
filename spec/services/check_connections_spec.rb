@@ -31,7 +31,7 @@ RSpec.describe CheckConnections  do
           grid[0].push(1)
         end
 
-        expect(last_turn).to receive(:player_id).and_return 1
+        expect(last_turn).to receive(:user_id).and_return 1
         expect(last_turn).to receive(:lane_number).and_return 0
       end
       
@@ -51,7 +51,7 @@ RSpec.describe CheckConnections  do
           grid[lane].push(1)
         end
 
-        expect(last_turn).to receive(:player_id).and_return 1
+        expect(last_turn).to receive(:user_id).and_return 1
         expect(last_turn).to receive(:lane_number).and_return 0
       end
       
@@ -71,7 +71,7 @@ RSpec.describe CheckConnections  do
           grid[lane].push(1)
         end
 
-        expect(last_turn).to receive(:player_id).and_return 1
+        expect(last_turn).to receive(:user_id).and_return 1
         expect(last_turn).to receive(:lane_number).and_return 0
       end
       
@@ -88,7 +88,7 @@ RSpec.describe CheckConnections  do
         grid[2].push(0)
         grid[3].push(1)
 
-        expect(last_turn).to receive(:player_id).and_return 1
+        expect(last_turn).to receive(:user_id).and_return 1
         expect(last_turn).to receive(:lane_number).and_return 0
       end
       

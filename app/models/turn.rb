@@ -1,11 +1,10 @@
 class Turn < ActiveRecord::Base
-  # has_one :player  FIXME: Not sure if I need this?
   belongs_to :game
 
-  validates :lane_number, :player_id, presence: true
+  validates :lane_number, :user_id, presence: true
 
-  def validate(player_id)
-    game.players.pluck(:id).include? player_id
+  def validate(user_id)
+    game.users.pluck(:id).include? user_id
   end
 
   def validate(lane_number)

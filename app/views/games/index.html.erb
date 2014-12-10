@@ -1,5 +1,18 @@
 <%= render partial: "header" %>
 
-<%= form_for Game.new do |f| %>
-	<% f.submit "New Game" %>
+<% if Game.waiting.empty? %>
+	<%= form_for Game.new do |f| %>
+		<% f.submit "New Game" %>
+	<% end %>
+<% else %>
+	<p>
+		<ul>
+			<% Game.waiting.each do |game| %>
+				<%= form_for [game] do |f| %>
+					<%= f.hidden_field(:user, value: current_user) %>
+					<%= f.submit "Join #{game.player_1.name}'s game"%>
+				<% end %>
+			<% end %>
+		</ul>
+	</p>
 <% end %>

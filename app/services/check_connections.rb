@@ -5,7 +5,7 @@ class CheckConnections
   end
 
   def call
-    @last_player_id = @last_turn.player_id
+    @last_player_id = @last_turn.user_id
 
     @last_turn_x = @last_turn.lane_number
     @last_turn_y = @grid[@last_turn_x].size - 1

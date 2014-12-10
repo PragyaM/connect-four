@@ -6,22 +6,19 @@ class Game < ActiveRecord::Base
 
   has_many :turns
 
-  belongs_to :player_1, :class_name => 'Player'
-  belongs_to :player_2, :class_name => 'Player'
+  belongs_to :player_1, :class_name => 'User'
+  belongs_to :player_2, :class_name => 'User'
 
-  validate :player_1_id, :player_2_id, presence: true
+  validate :player_1, presence: true
+
+  scope :not_waiting, -> {where(:player_1, :player_2, presence: true)}
+  scope :waiting, -> {where(player_2: nil)}
 
   scope :not_completed, -> {where(finished: false)}
   scope :completed, -> {where(finished: true)}
 
-  #NOTE: This validation can be shifted to the database layer by making a table for uniting player-turns
-        # See if this will be needed down the track
-
   def validate(turns)
     (turns.pluck(:player_id).uniq - player_1_id - player_2_id) <= 0
-  end
-
-  def winner?
   end
 
   def space_in_lane?(lane_number)
@@ -32,8 +29,8 @@ class Game < ActiveRecord::Base
     if turns.empty?
       player_1
     else
-      last_player_id = turns.last.player_id
-      player_1_id == last_player_id ? player_2 : player_1
+      last_player_id = turns.last.user_id
+      last_player_id == player_1.id ? player_2 : player_1
     end
   end
 end

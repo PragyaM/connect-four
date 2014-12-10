@@ -1,0 +1,9 @@
+<%= render partial: "header" %>
+
+<%= form_for [Player.new] do |f| %>
+	<p id="new_player">
+		What name do you want to go by?
+		<%= f.text_field :name, autofocus: true %>
+		<%= f.submit "that's my name." %>
+	</p>
+<% end %>

@@ -9,7 +9,7 @@ class ConstructBoard
     (Game::GRID_WIDTH).times {grid.push []}
 
     @game.turns.each do |turn|
-      grid[turn.lane_number].push turn.player_id
+      grid[turn.lane_number].push turn.user_id
     end
 
     grid
