@@ -9,7 +9,6 @@ class GamesController < ApplicationController
           if CheckConnections.new(@grid, @game.turns.last).call
             @game.finished = true
             @game.save! #FIXME: THIS IS BAD
-            #TODO Disable interaction with the game grid
           end
         end
       end

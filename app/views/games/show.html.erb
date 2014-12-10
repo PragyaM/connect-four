@@ -12,7 +12,7 @@
 	<div id="header">
 		<% Game::GRID_WIDTH.times do |lane| %>
 			<div class="blocks">
-				<% if @game.current_player == current_user %>
+				<% if @game.current_player == current_user && !@game.finished%>
 					<%= form_for [@game, Turn.new] do |f| %>
 						<%= f.hidden_field(:lane_number, value: lane.to_i) %>
 						<%= f.hidden_field(:user_id, value: @game.current_player.id.to_i) %>

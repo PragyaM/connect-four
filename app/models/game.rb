@@ -22,7 +22,8 @@ class Game < ActiveRecord::Base
   end
 
   def space_in_lane?(lane_number)
-    (ConstructBoard.new(self).call)[lane_number].size < (GRID_HEIGHT - 1)
+    grid = ConstructBoard.new(self).call
+    grid[lane_number].size < (GRID_HEIGHT - 1)
   end
 
   def current_player
