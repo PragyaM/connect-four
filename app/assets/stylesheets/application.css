@@ -14,8 +14,11 @@
  *= require_self
  */
 
+
+
 body {
 	font-family: 'Muli', sans-serif;
+	/*background: #ffeaec;*/
 }
 
 .container {

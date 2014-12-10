@@ -26,9 +26,7 @@ class GamesController < ApplicationController
 
   def update # PUT /games/[id]
     game = Game.find(params[:id])
-
     game.update!(id: params[:id], player_2: current_user)
-
     redirect_to game
   end
 end
