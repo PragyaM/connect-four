@@ -14,7 +14,7 @@ RSpec.describe CheckConnections  do
           grid[lane].push(1)
         end
 
-        expect(last_turn).to receive(:player_id).and_return 1
+        expect(last_turn).to receive(:user_id).and_return 1
         expect(last_turn).to receive(:lane_number).and_return 3
       end
       

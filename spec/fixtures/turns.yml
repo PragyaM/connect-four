@@ -1,0 +1,12 @@
+last_turn_player_1:
+  game: playing_game (Game)
+  lane_number: 3
+  user_id: 1
+
+last_turn_player_2:
+  game: playing_game (Game)
+  lane_number: 3
+  user_id: 2
+
+
+

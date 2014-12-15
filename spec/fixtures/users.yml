@@ -1,0 +1,7 @@
+bert:
+  id: 1
+  name: George
+
+ernie:
+  id: 2
+  name: Paul

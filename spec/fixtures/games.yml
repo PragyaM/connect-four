@@ -1,0 +1,17 @@
+waiting_game:
+  id: 1
+  player_1: bert (User)
+  player_2: nil
+  finished: false
+
+playing_game:
+  id: 2
+  player_1: bert (User)
+  player_2: ernie (User)
+  finished: false
+
+finished_game:
+  id: 3
+  player_1: bert (User)
+  player_2: ernie (User)
+  finished: true
