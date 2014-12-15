@@ -9,9 +9,32 @@ module GamesHelper
     end
   end
 
-  def games_in_progress?(user)
-    Game.not_waiting.pluck(user.id).size > 0 &&
-    Game.not_waiting.pluck(user.id).any? { |game| Game.not_completed.include? game }
+  def unfinished_games
+    (Game.not_completed - Game.waiting).select do |game|
+      current_user_playing? game
+    end
+  end
+
+  def joinable_games
+    Game.waiting.select do |game|
+      game.player_1 != current_user
+    end
+  end
+
+  def waiting_games
+    Game.waiting.select do |game|
+      game.player_1 == current_user
+    end
+  end
+
+  def finished_games
+    Game.completed.select do |game|
+      current_user_playing? game
+    end
+  end
+
+  def current_user_playing?(game)
+    game.player_1 == current_user || game.player_2 == current_user
   end
 
   def turn_info_text(game)
@@ -24,6 +47,10 @@ module GamesHelper
     else
       "Game over. #{winner(game).name} has connected four."
     end
+  end
+
+  def opponent(game)
+    game.player_1 == current_user ? game.player_2.name : game.player_1.name
   end
 
   private

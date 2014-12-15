@@ -21,7 +21,6 @@ class CheckConnections
       unless count >= 4
         if @grid[lane][@last_turn_y] == @last_player_id
           count += 1
-
         else
           count = 0
         end

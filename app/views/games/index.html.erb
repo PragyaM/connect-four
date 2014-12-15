@@ -1,20 +1,23 @@
 <%= render partial: "header" %>
 
-<% if games_in_progress?(current_user) %>
-	<p>Resume game.</p>
-<% elsif Game.waiting.empty? %>
-	<%= form_for Game.new do |f| %>
-		<% f.submit "New Game" %>
-	<% end %>
-<% else %>
-	<p>
-		<ul>
-			<% Game.waiting.each do |game| %>
-				<%= form_for [game] do |f| %>
-					<%= f.hidden_field(:user, value: current_user) %>
-					<%= f.submit "Join #{game.player_1.name}'s game"%>
-				<% end %>
-			<% end %>
-		</ul>
-	</p>
+<% unfinished_games.each do |game| %>
+  <%= form_for game do |f| %>
+    <%= f.submit "continue playing against #{opponent(game)}" %>
+  <% end %>
 <% end %>
+
+<% joinable_games.each do |game| %>
+  <%= form_for [game] do |f| %>
+    <%= f.hidden_field(:user, value: current_user) %>
+    <%= f.submit "Play against #{game.player_1.name}"%>
+  <% end %>
+<% end %>
+
+<%= form_for Game.new do |f| %>
+  <% f.submit "Send invitation to everyone" %>
+<% end %>
+
+<div>
+  <h2>Your Game History</h2>
+
+</div>
