@@ -11,19 +11,19 @@ class Turn < ActiveRecord::Base
 
   def lane_is_not_full
     unless game.space_in_lane?(lane_number)
-      errors.add(:lane_number, "is not full")
+      errors.add(:lane_number, "This lane doesn't have enough space")
     end
   end
 
   def player_is_part_of_game
     unless player_in_game?
-      errors.add(:user_id, "is not playing this game")
+      errors.add(:user_id, "This isn't your game to play!")
     end
   end
 
   def turns_alternate_between_players
     if player_double_up?
-      errors.add(:user_id, "cannot play twice in a row")
+      errors.add(:user_id, "You cannot play twice in a row")
     end
   end
 

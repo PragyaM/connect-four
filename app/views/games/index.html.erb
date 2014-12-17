@@ -1,21 +1,49 @@
 <%= render partial: "header" %>
 
-<% unfinished_games.each do |game| %>
-  <%= form_for game do |f| %>
-    <%= f.submit "continue playing against #{opponent(game)}" %>
-  <% end %>
-<% end %>
+<div id="play_options"
+  data-waiting-game-count="<%= Game.waiting.size %>">
 
-<% joinable_games.each do |game| %>
-  <%= form_for [game] do |f| %>
-    <%= f.hidden_field(:user, value: current_user) %>
-    <%= f.submit "Play against #{game.player_1.name}"%>
-  <% end %>
-<% end %>
+  <h2>Play!</h2>
 
-<%= form_for Game.new do |f| %>
-  <% f.submit "Send invitation to everyone" %>
-<% end %>
+  <meta waiting_game_count = <%= Game.waiting.size %> />
+
+  <% current_user.recently_accepted_invitations.each do |game| %>
+    <div id="accepted_invite">
+      <%= form_for game do |f| %>
+        <p> <%= current_user.opponent(game).name %> accepted your invitation! </p>
+        <%= f.submit "Go to game" %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% current_user.resumable_games.each do |game| %>
+    <%= form_for game do |f| %>
+      <%= f.submit "continue playing against #{current_user.opponent(game).name}" %>
+    <% end %>
+  <% end %>
+
+  <% current_user.joinable_games.each do |game| %>
+    <%= form_for [game] do |f| %>
+      <%= f.hidden_field(:user, value: current_user) %>
+      <%= f.submit "Play against #{game.player_1.name}"%>
+    <% end %>
+  <% end %>
+
+  <% if current_user.waiting_game_exists? %>
+    <%= form_for current_user.waiting_game, method: :delete do |f| %>
+      <% if current_user.waiting_game_exists? %>
+        <% f.submit "Retract invitation" %>
+      <% end %>
+    <% end %>
+  <% else %>
+    <%= form_for Game.new do |f| %>
+      <% unless current_user.waiting_game_exists? %>
+        <% f.submit "Send invitation to everyone" %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+</div>
 
 <div>
   <h2>Your Game History</h2>

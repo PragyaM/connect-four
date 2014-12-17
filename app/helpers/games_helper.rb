@@ -1,66 +1,38 @@
 module GamesHelper
-  def resource_for_slot(game, grid, lane, row)
-    if row >= grid[lane].size
-      "empty.png"
-    elsif grid[lane][row] == game.player_1_id
-      "purple_coin.png"
-    elsif grid[lane][row] == game.player_2_id
-      "blue_coin.png"
-    end
-  end
 
-  def unfinished_games
-    (Game.not_completed - Game.waiting).select do |game|
-      current_user_playing? game
-    end
-  end
-
-  def joinable_games
-    Game.waiting.select do |game|
-      game.player_1 != current_user
-    end
-  end
-
-  def waiting_games
-    Game.waiting.select do |game|
-      game.player_1 == current_user
-    end
-  end
-
-  def finished_games
-    Game.completed.select do |game|
-      current_user_playing? game
-    end
-  end
-
-  def current_user_playing?(game)
-    game.player_1 == current_user || game.player_2 == current_user
-  end
-
-  def turn_info_text(game)
-    "It is #{current_player_name_for_turn_info(game)} turn"
+  def turn_info(game)
+    "It is #{player_for_turn(game)} turn"
   end
 
   def game_over_text(game)
-    if winner(game) == current_user
+    if game.winner == current_user
       "You won!"
     else
       "Game over. #{winner(game).name} has connected four."
     end
   end
 
-  def opponent(game)
-    game.player_1 == current_user ? game.player_2.name : game.player_1.name
+  def resource_for_slot(game, grid, lane, row)
+    if row >= grid[lane].size
+      "empty.png"
+    else
+      resource_for_player(game, grid[lane][row])
+    end
+  end
+
+  def resource_for_player(game, player_id)
+    if game.player_1_id == player_id
+      "pink_coin.png"
+    elsif game.player_2_id == player_id
+      "silver_coin.png"
+    else
+      "empty.png"
+    end
   end
 
   private
 
-  def current_player_name_for_turn_info(game)
+  def player_for_turn(game)
     game.current_player == current_user ? "your" : "#{game.current_player.name}'s"
-  end
-
-  def winner(game)
-    winner_id = game.turns.last.user_id
-    User.find(winner_id)
   end
 end

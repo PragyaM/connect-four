@@ -31,6 +31,11 @@ class Game < ActiveRecord::Base
     end
   end
 
+  def winner
+    winner_id = turns.last.user_id
+    User.find(winner_id)
+  end
+
   private
 
   def unique_players

@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   
   root 'games#index'
 
-  resources :games, only: [:index, :show, :create, :update] do
+  resources :games do
     resources :turns, only: :create
   end
 

@@ -62,11 +62,30 @@ input[type=submit]:hover {
   cursor: pointer;
 }
 
-/*#grid {
-    margin-left:auto;
-    margin-right:auto;
+/*a {
+  text-decoration: none;
+  font-size: 15px;
+  border: none;
+  background: #cceeee;
+  color: #984a97;
+  padding: 10px; 
+  text-transform: uppercase;
+  moz-border-radius: 80px;
+    -webkit-border-radius: 80px;
+}
+
+a:hover {
+  color: #9999de;
+  text-transform: uppercase;
+  cursor: pointer;
+}*/
+
+#accepted_invite {
+  border: 2px dashed pink;
+  moz-border-radius: 40px;
+    -webkit-border-radius: 40px;
 }
 
 td {
   padding: 20px
-}*/
+}

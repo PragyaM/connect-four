@@ -1,4 +1,13 @@
 class GamesController < ApplicationController
+  def index
+    respond_to do |format|
+      format.html
+      format.json do
+        render json: {waiting_game_count: Game.waiting.size}
+      end
+    end
+  end
+
   def show # GET /games/[id]
     @game = Game.find(params[:id])
 
@@ -17,7 +26,10 @@ class GamesController < ApplicationController
   end
 
   def create # POST /player_games
-    game = Game.create!(player_1: current_user)
+    unless Game.waiting.pluck(:player_1_id).include? current_user.id
+      game = Game.create!(player_1: current_user)
+    end
+    redirect_to Game
   end
 
   def update # PUT /games/[id]
@@ -26,6 +38,14 @@ class GamesController < ApplicationController
       game.update!(id: params[:id], player_2: current_user)
     end
     redirect_to game
+  end
+
+  def destroy
+    if Game.waiting.pluck(:player_1_id).include? current_user.id
+      game = Game.find(params[:id])
+      game.destroy
+    end
+    redirect_to Game
   end
 
   private
