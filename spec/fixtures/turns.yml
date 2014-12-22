@@ -1,12 +1,17 @@
-last_turn_player_1:
+last_turn_player1_lane3:
   game: playing_game (Game)
   lane_number: 3
-  user_id: 1
+  player: bert_playing_against_ernie (Player)
+
+last_turn_player1_lane0:
+  game: playing_game (Game)
+  lane_number: 0
+  player: bert_playing_against_ernie (Player)
 
 last_turn_player_2:
   game: playing_game (Game)
   lane_number: 3
-  user_id: 2
+  player: ernie_playing_against_bert (Player)
 
 
 

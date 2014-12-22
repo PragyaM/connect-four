@@ -1,0 +1,9 @@
+bert_playing_against_ernie:
+  id: 1
+  user: bert (User)
+  game: playing_game (Game)
+
+ernie_playing_against_bert:
+  id: 2
+  user: ernie (User)
+  game: playing_game (Game)

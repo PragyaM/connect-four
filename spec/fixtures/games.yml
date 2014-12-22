@@ -1,17 +1,11 @@
 waiting_game:
   id: 1
-  player_1: george (User)
-  player_2: nil
   finished: false
 
 playing_game:
   id: 2
-  player_1: george (User)
-  player_2: paul (User)
   finished: false
 
 finished_game:
   id: 3
-  player_1: george (User)
-  player_2: paul (User)
   finished: true
