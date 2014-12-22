@@ -1,43 +1,39 @@
 <%= render partial: "header" %>
 
 <div id="play_options"
-  data-waiting-game-count="<%= Game.waiting.size %>">
+  data-pending-game-count="<%= Game.pending.size %>"
+  class="games" >
 
   <h2>Play!</h2>
 
-  <meta waiting_game_count = <%= Game.waiting.size %> />
-
-  <% current_user.recently_accepted_invitations.each do |game| %>
-    <div id="accepted_invite">
-      <%= form_for game do |f| %>
-        <p> <%= current_user.opponent(game).name %> accepted your invitation! </p>
-        <%= f.submit "Go to game" %>
-      <% end %>
+  <% @accepted_games.each do |game| %>
+    <div id="accepted_game">
+        <p> <%= opponent_name(game) %> accepted your invitation! </p>
+        <%= link_to "go to game", game %>
     </div>
   <% end %>
 
-  <% current_user.resumable_games.each do |game| %>
-    <%= form_for game do |f| %>
-      <%= f.submit "continue playing against #{current_user.opponent(game).name}" %>
+  <% @resumable_games.each do |game| %>
+    <div>
+      <%= link_to "continue playing against #{opponent_name(game)}", game %>
+    </div>
+  <% end %>
+
+  <% @joinable_games.each do |game| %>
+    <%= form_for [game, Player.new] do |f| %>
+      <%= f.submit "Play against #{game.player(1).user.name}"%>
     <% end %>
   <% end %>
 
-  <% current_user.joinable_games.each do |game| %>
-    <%= form_for [game] do |f| %>
-      <%= f.hidden_field(:user, value: current_user) %>
-      <%= f.submit "Play against #{game.player_1.name}"%>
-    <% end %>
-  <% end %>
-
-  <% if current_user.waiting_game_exists? %>
-    <%= form_for current_user.waiting_game, method: :delete do |f| %>
-      <% if current_user.waiting_game_exists? %>
-        <% f.submit "Retract invitation" %>
+  <% if @user.pending_game_exists? %>
+    <%= form_for @user.pending_game, method: :delete do |f| %>
+      <% if @user.pending_game_exists? %>
+        <% f.submit "Cancel invitation" %>
       <% end %>
     <% end %>
   <% else %>
     <%= form_for Game.new do |f| %>
-      <% unless current_user.waiting_game_exists? %>
+      <% unless @user.pending_game_exists? %>
         <% f.submit "Send invitation to everyone" %>
       <% end %>
     <% end %>
@@ -47,5 +43,9 @@
 
 <div>
   <h2>Your Game History</h2>
-
+  <% @finished_games.each do |game| %>
+    <div id="finished_game">
+        <p><%= finished_game_text(game) %></p>
+    </div>
+  <% end %>
 </div>

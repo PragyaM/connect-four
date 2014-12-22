@@ -3,10 +3,11 @@ class TurnsController < ApplicationController
 
   def create
     lane_number = params.require(:turn)[:lane_number].to_i
-    user_id = params.require(:turn)[:user_id]
+    player_id = params.require(:turn)[:player_id]
+    puts player_id
 
-    MakeTurn.new(lane_number, user_id, @game).call
-
+    MakeTurn.new(lane_number, player_id, @game).call
+    
     redirect_to @game
   end
 

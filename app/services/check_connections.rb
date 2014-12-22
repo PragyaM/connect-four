@@ -1,16 +1,24 @@
 class CheckConnections
-  def initialize(grid, last_turn)
+
+  #Look at using chunk to make the calculations less bulky
+
+  def initialize(grid, game)
     @grid = grid
-    @last_turn = last_turn
+    @game = game
+    @last_turn = @game.turns.last
   end
 
   def call
-    @last_player_id = @last_turn.user_id
+    if @game.turns.size > 0
+      @last_player_id = @last_turn.player_id
 
-    @last_turn_x = @last_turn.lane_number
-    @last_turn_y = @grid[@last_turn_x].size - 1
+      @last_turn_x = @last_turn.lane_number
+      @last_turn_y = @grid[@last_turn_x].size - 1
 
-    horizontal_match? || vertical_match? || diagonal_down_match? || diagonal_up_match?
+      horizontal_match? || vertical_match? || diagonal_down_match? || diagonal_up_match?
+    else
+      false
+    end
   end
 
   private
@@ -19,11 +27,7 @@ class CheckConnections
     count = 0
     (Game::GRID_WIDTH).times do |lane|
       unless count >= 4
-        if @grid[lane][@last_turn_y] == @last_player_id
-          count += 1
-        else
-          count = 0
-        end
+        @grid[lane][@last_turn_y] == @last_player_id ? count += 1 : count = 0
       end
     end
 
@@ -31,18 +35,11 @@ class CheckConnections
   end
 
   def vertical_match?
-    count = 0
-    (Game::GRID_HEIGHT).times do |row|
-      unless count >= 4
-        if @grid[@last_turn_x][row] == @last_player_id
-          count += 1
-        else
-          count = 0
-        end
-      end
+    @grid[@last_turn_x].chunk do |ele| 
+      ele == @last_player_id 
+    end.detect do |last_player, array| 
+      last_player && array.size >= 4
     end
-
-    count >= 4
   end
 
   def diagonal_down_match?

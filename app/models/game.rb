@@ -2,47 +2,47 @@ class Game < ActiveRecord::Base
   GRID_WIDTH = 7
   GRID_HEIGHT = 6
 
-  NUMBER_OF_PLAYERS = 2
+  has_many :players, dependent: :destroy
+  has_many :turns, dependent: :destroy
 
-  belongs_to :player_1, :class_name => 'User'
-  belongs_to :player_2, :class_name => 'User'
-
-  has_many :turns
-
-  scope :not_waiting, -> {where(:player_2 != nil)}
-  scope :waiting, -> {where(player_2: nil)}
+  scope :not_pending, -> {where(:players.size == 2)}
+  scope :pending, -> {where(:players.size == 1)}
   scope :not_completed, -> {where(finished: false)}
   scope :completed, -> {where(finished: true)}
 
-  validate :player_1, presence: true
-  validate :unique_players
+  validate :correct_number_of_players
 
-  def space_in_lane?(lane_number)
-    grid = ConstructBoard.new(self).call
-    grid[lane_number].size <= GRID_HEIGHT
-  end
-
-  def current_player
+  def active_player
     if turns.empty?
-      player_1
+      player(1)
     else
-      last_player_id = turns.last.user_id
-      last_player_id == player_1.id ? player_2 : player_1
+      turns.last.player == player(1) ? player(2) : player(1)
     end
   end
 
   def winner
-    winner_id = turns.last.user_id
-    User.find(winner_id)
+    turns.last.player if finished?
+  end
+
+  def pending?
+    players.size == 1
+  end
+
+  def player(number)
+    if players.size >= number
+      players[number - 1]
+    end
+  end
+
+  def opponent(active_user)
+    if players.pluck(:user_id).include? active_user.id
+      players.select { |player| player.user != active_user }.first
+    end
   end
 
   private
 
-  def unique_players
-    unless Game.waiting.include? self
-      if player_1_id == player_2_id
-        errors.add(:player_1, "cannot play against themself!")
-      end
-    end
+  def correct_number_of_players
+    players.size <= 2 && players.size >= 0
   end
 end

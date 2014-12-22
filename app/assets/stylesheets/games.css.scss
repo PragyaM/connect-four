@@ -2,11 +2,48 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+ #main-title {
+  font-size: 60px;
+  color: #9999de;
+  background: none;
+  margin: 20px;
+  text-decoration: none;
+ 
+  :hover {
+    color: #7777cc;
+  }
+
+ a {
+  font-size: 60px;
+  color: #9999de;
+  background: none;
+  margin: 20px;
+  text-decoration: none;
+  :hover {
+    color: #7777cc;
+  }
+ }
+}
+
+#accepted_game {
+  border: 2px dashed pink;
+  moz-border-radius: 40px;
+    -webkit-border-radius: 40px;
+}
+
+#alert {
+  color: red;
+}
+
+td {
+  padding: 20px
+}
+
 #grid {
 	margin-left:auto; 
-    margin-right:auto;
-    padding-bottom: 20px;
-    background: #90B6C9;
+  margin-right:auto;
+  padding-bottom: 20px;
+  background: #90B6C9;
 }
 
 .wrap {
@@ -22,7 +59,6 @@
     margin-top: 2px;
     margin-bottom: 2px;
     align: center;
-    /*background: #eed3d7;*/
     background: #90B6C9;
 }
 
@@ -34,3 +70,47 @@
   max-height: 45px;
   max-width: 45px;
 }
+
+.games {
+  display: inline;
+
+  input[type=submit] {
+    font-size: 15px;
+    border: none;
+    margin: 10px;
+    background: #cceeee;
+    color: #984a97;
+    padding: 10px; 
+    text-transform: uppercase;
+    moz-border-radius: 80px;
+      -webkit-border-radius: 80px;
+  }
+
+  input[type=submit]:hover {
+    color: #9999de;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  a {
+    text-decoration: none;
+    font-size: 15px;
+    border: none;
+    background: #cceeee;
+    color: #984a97;
+    padding: 10px;
+    margin: 10px;
+    line-height: 4 !important;
+    text-transform: uppercase;
+    moz-border-radius: 80px;
+      -webkit-border-radius: 80px;
+  }
+
+  a:hover {
+    color: #9999de;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+}
+
+

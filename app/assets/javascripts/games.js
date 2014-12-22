@@ -1,7 +1,6 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
 
-
 $(function() {
   var gameId = $("#grid").data("game-id");
   var my_turn = $("#grid").data("my-turn")
@@ -19,19 +18,18 @@ $(function() {
   }
 });
 
-
 $(function() {
-  var waiting_game_count = $("#play_options").data("waiting-game-count");
+  var pending_game_count = $("#play_options").data("pending-game-count");
 
   var pollAndReloadWhenGamesUpdated = function() {
     $.getJSON("/games/").done(function(result) {
-      if (result.waiting_game_count != waiting_game_count) {
+      if (result.pending_game_count != pending_game_count) {
         location.reload();
       }
     });
 
   };
-  if (waiting_game_count != null) {
+  if (pending_game_count != null) {
     setInterval(pollAndReloadWhenGamesUpdated, 3000);
   }
 });

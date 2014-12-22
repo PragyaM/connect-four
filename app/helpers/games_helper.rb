@@ -5,13 +5,13 @@ module GamesHelper
   end
 
   def game_over_text(game)
-    if game.winner == current_user
+    if game.winner.user == current_user
       "You won!"
     else
-      "Game over. #{winner(game).name} has connected four."
+      "Game over. #{game.winner.user.name} has connected four."
     end
   end
-
+  
   def resource_for_slot(game, grid, lane, row)
     if row >= grid[lane].size
       "empty.png"
@@ -21,18 +21,26 @@ module GamesHelper
   end
 
   def resource_for_player(game, player_id)
-    if game.player_1_id == player_id
+    if game.player(1).id == player_id
       "pink_coin.png"
-    elsif game.player_2_id == player_id
+    elsif game.player(2).id == player_id
       "silver_coin.png"
     else
       "empty.png"
     end
   end
 
+  def finished_game_text(game)
+    game.winner.user == current_user ? "Won against #{opponent_name(game)}" : "Lost against #{opponent_name(game)}"
+  end
+
+  def opponent_name(game)
+    game.opponent(current_user).user.name
+  end
+
   private
 
   def player_for_turn(game)
-    game.current_player == current_user ? "your" : "#{game.current_player.name}'s"
+    game.active_player.user == current_user ? "your" : "#{game.active_player.user.name}'s"
   end
 end

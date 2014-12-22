@@ -1,9 +1,10 @@
 class CreatePlayers < ActiveRecord::Migration
   def change
     create_table :players do |t|
-      t.string :name, null: false, default: "Nigel No-Name"
+      t.integer :user_id
+      t.integer :game_id
       t.timestamps
     end
-    # add_index(:players, :name, unique: true)
+    add_index(:players, [:user_id, :game_id], unique: true)
   end
 end

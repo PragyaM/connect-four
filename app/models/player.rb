@@ -1,4 +1,11 @@
 class Player < ActiveRecord::Base
-  validates :name, presence: true
-  # FIXME: Not sure if this is needed.. validates :name, uniqueness: {scope: :id, message: "should be unique to each player"}
+  belongs_to :game
+  belongs_to :user
+
+  validates :user_id, :game_id, presence: true
+  validates_uniqueness_of :user, scope: :game
+  
+  def opponent(game)
+    game.player(1) == self ? game.player(2) : game.player(1)
+  end
 end

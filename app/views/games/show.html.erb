@@ -1,45 +1,46 @@
 <%= render partial: "header" %>
+<div class="games">
+  <% if @game.pending? %>
+    <p> Game waiting for another player </p>
+  <% else %>
+    <div id="game_info">
+      <%= image_tag resource_for_player(@game, @active_player.id) %>
+      <% if @game.finished %>
+        <p> <%= game_over_text(@game) %> </p>
+      <% else %>
+        <p> <%= turn_info(@game) %> </p>
+      <% end %>
+      <% if alert %>
+        <p id="alert"><%= alert %></p>
+      <% end %>
+    </div>
 
-<% if Game.waiting.include?(@game) %>
-  <p> Game waiting for another player </p>
-<% else %>
-  <div id="game_info">
-    <%= image_tag resource_for_player(@game, @game.current_player.id) %>
-    <% if @game.finished %>
-      <p> <%= game_over_text(@game) %> </p>
-    <% else %>
-      <p> <%= turn_info(@game) %> </p>
-    <% end %>
-    <% if alert %>
-      <p id="alert"><%= alert %></p>
-    <% end %>
-  </div>
+    <div id="grid" data-game-id="<%= @game.id %>" 
+          data-my-turn="<%= @active_player.user == current_user %>">
 
-  <div id="grid" data-game-id="<%= @game.id %>" 
-        data-my-turn="<%= @game.current_player == current_user %>">
-
-    <div id="header">
-      <% Game::GRID_WIDTH.times do |lane| %>
-        <div class="blocks">
-          <% if @game.current_player == current_user && !@game.finished%>
-            <%= form_for [@game, Turn.new] do |f| %>
-              <%= f.hidden_field(:lane_number, value: lane.to_i) %>
-              <%= f.hidden_field(:user_id, value: @game.current_player.id.to_i) %>
-              <%= f.submit "drop"%>
+      <div id="header">
+        <% Game::GRID_WIDTH.times do |lane| %>
+          <div class="blocks">
+            <% if @active_player.user == current_user && !@game.finished?%>
+              <%= form_for [@game, Turn.new] do |f| %>
+                <%= f.hidden_field(:lane_number, value: lane.to_i) %>
+                <%= f.hidden_field(:player_id, value: @active_player.id) %>
+                <%= f.submit "drop"%>
+              <% end %>
             <% end %>
+          </div>
+        <% end %>
+      </div>
+
+      <% (Game::GRID_HEIGHT - 1).downto(0) do |row| %>
+        <div class="wrap">
+          <% Game::GRID_WIDTH.times do |lane| %>
+            <div class="blocks">
+              <%= image_tag resource_for_slot(@game, @grid, lane, row) %>
+            </div>
           <% end %>
         </div>
       <% end %>
     </div>
-
-    <% (Game::GRID_HEIGHT - 1).downto(0) do |row| %>
-      <div class="wrap">
-        <% Game::GRID_WIDTH.times do |lane| %>
-          <div class="blocks">
-            <%= image_tag resource_for_slot(@game, @grid, lane, row) %>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
-<% end %>
+  <% end %>
+</div>

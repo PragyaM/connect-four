@@ -4,45 +4,49 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  def waiting_game_exists?
-    Game.waiting.pluck(:player_1_id).include? id
+  has_many :players, dependent: :destroy
+
+  def games
+    players.map { |player| player.game }
   end
 
-  def waiting_game
-    Game.waiting.detect { |game| game.player_1 == self }
+  def pending_game_exists?
+    games.select { |game| game.pending? }.size > 0
+  end
+
+  def pending_game
+    games.select { |game| game.pending? }.first
   end
 
   def joinable_games
-    Game.waiting.select do |game|
-      game.player_1 != self
-    end
+    Game.pending.reject { |game| playing? game }
   end
 
   def finished_games
-    Game.completed.select do |game|
+    games.select { |game| game.finished? }.select do |game|
       playing? game
     end
   end
 
   def resumable_games
-    (Game.not_completed - Game.waiting - recently_accepted_invitations).select do |game|
+    (continuing_games - recently_accepted_games).select do |game|
       playing? game
     end
   end
 
-  def opponent(game)
-    game.player_1 == self ? game.player_2 : game.player_1
-  end
-
-  def recently_accepted_invitations
-    (Game.not_completed - Game.waiting).select do |game|
-      game.turns.size == 0 && self == game.player_1
+  def recently_accepted_games
+    continuing_games.select do |game|
+      game.turns.size == 0 && self == game.player(1).user
     end
   end
 
   private
 
+  def continuing_games
+    games.reject {|game| game.finished?} - games.select {|game| game.pending?}
+  end
+
   def playing?(game)
-    game.player_1 == self || game.player_2 == self
+    game.players.any? { |player| players.include? player }
   end
 end

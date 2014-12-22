@@ -14,22 +14,23 @@
 ActiveRecord::Schema.define(version: 20141209033359) do
 
   create_table "games", force: true do |t|
-    t.boolean  "finished",    default: false, null: false
-    t.integer  "player_1_id",                 null: false
-    t.integer  "player_2_id"
+    t.boolean  "finished",   default: false, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "players", force: true do |t|
-    t.string   "name",       default: "Nigel No-Name", null: false
+    t.integer  "user_id"
+    t.integer  "game_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "players", ["user_id", "game_id"], name: "index_players_on_user_id_and_game_id", unique: true
+
   create_table "turns", force: true do |t|
     t.integer  "lane_number", null: false
-    t.integer  "user_id",     null: false
+    t.integer  "player_id",   null: false
     t.integer  "game_id",     null: false
     t.datetime "created_at"
     t.datetime "updated_at"
