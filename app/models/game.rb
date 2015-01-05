@@ -5,8 +5,8 @@ class Game < ActiveRecord::Base
   has_many :players, dependent: :destroy
   has_many :turns, dependent: :destroy
 
-  scope :not_pending, -> {where(:players.size == 2)}
-  scope :pending, -> {where(:players.size == 1)}
+  scope :not_pending, -> {joins(:players).group(:game_id).having("count(game_id) = 2")}
+  scope :pending, -> {joins(:players).group(:game_id).having("count(game_id) = 1")}
   scope :not_completed, -> {where(finished: false)}
   scope :completed, -> {where(finished: true)}
 
@@ -34,9 +34,9 @@ class Game < ActiveRecord::Base
     end
   end
 
-  def opponent(active_user)
-    if players.pluck(:user_id).include? active_user.id
-      players.select { |player| player.user != active_user }.first
+  def opponent(user)
+    if players.pluck(:user_id).include? user.id
+      players.select { |player| player.user != user }.first
     end
   end
 

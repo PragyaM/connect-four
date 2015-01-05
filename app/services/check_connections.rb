@@ -1,7 +1,5 @@
 class CheckConnections
 
-  #Look at using chunk to make the calculations less bulky
-
   def initialize(grid, game)
     @grid = grid
     @game = game

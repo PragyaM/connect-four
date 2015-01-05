@@ -10,7 +10,7 @@ class GamesController < ApplicationController
       end
 
       format.json do
-        render json: {pending_game_count: Game.pending.size}
+        render json: {pending_game_count: Game.pending.length}
       end
     end
   end
@@ -32,12 +32,7 @@ class GamesController < ApplicationController
   end
 
   def create # POST /games
-    unless current_user.pending_game_exists?
-      game = Game.create!
-      if game.save
-        Player.create(game_id: game.id, user: current_user)
-      end
-    end
+    MakeGame.new(current_user).call
     redirect_to games_path
   end
 
