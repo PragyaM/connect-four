@@ -1,11 +1,20 @@
-waiting_game:
-  id: 1
+pending_game:
   finished: false
 
 playing_game:
-  id: 2
   finished: false
 
 finished_game:
-  id: 3
   finished: true
+
+horizontal_win_game:
+  finished: false
+
+vertical_win_game:
+  finished: false
+
+diagonal_up_win_game:
+ finished: false
+
+diagonal_down_win_game:
+ finished: false

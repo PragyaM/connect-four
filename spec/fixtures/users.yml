@@ -1,7 +1,5 @@
-george:
-  id: 1
-  name: George
+bert:
+  name: Bert
 
-paul:
-  id: 2
-  name: Paul
+ernie:
+  name: Ernie

@@ -1,9 +1,39 @@
 bert_playing_against_ernie:
-  id: 1
-  user: bert (User)
-  game: playing_game (Game)
+  user: bert 
+  game: playing_game 
 
 ernie_playing_against_bert:
-  id: 2
-  user: ernie (User)
-  game: playing_game (Game)
+  user: ernie 
+  game: playing_game 
+
+bert_waiting_for_opponent:
+  user: bert 
+  game: pending_game 
+
+bert_won_against_ernie:
+  user: bert 
+  game: finished_game 
+
+player_horizontal_win:
+  user: bert 
+  game: horizontal_win_game 
+
+player_vertical_win:
+  user: bert 
+  game: vertical_win_game 
+
+player_diagonal_up_win:
+  user: bert 
+  game: diagonal_up_win_game 
+
+opponent_diagonal_up_win:
+  user: ernie 
+  game: diagonal_up_win_game 
+
+player_diagonal_down_win:
+  user: bert 
+  game: diagonal_down_win_game 
+
+opponent_diagonal_down_win:
+  user: ernie 
+  game: diagonal_down_win_game 
