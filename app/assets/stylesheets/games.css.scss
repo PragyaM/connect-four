@@ -3,30 +3,32 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
  #main-title {
+  font-family: 'Special Elite', cursive;
   font-size: 60px;
-  color: #9999de;
+  color: black;
   background: none;
   margin: 20px;
   text-decoration: none;
  
   :hover {
-    color: #7777cc;
+    color: #D64747;
   }
 
  a {
   font-size: 60px;
-  color: #9999de;
+  color: black;
   background: none;
-  margin: 20px;
+  // margin: 20px;
   text-decoration: none;
+  
   :hover {
-    color: #7777cc;
+    color: #D64747;
   }
  }
 }
 
 #accepted_game {
-  border: 2px dashed pink;
+  border: 2px dashed black;
   moz-border-radius: 40px;
     -webkit-border-radius: 40px;
 }
@@ -35,31 +37,28 @@
   color: red;
 }
 
-td {
-  padding: 20px
-}
-
 #grid {
 	margin-left:auto; 
   margin-right:auto;
+  width: 70%;
   padding-bottom: 20px;
-  background: #90B6C9;
+  background: transparent;
 }
 
 .wrap {
-	width: 730px;
-	margin-left: 35px;
-	background: #90B6C9;
+	width: 100%;
+	margin-left: auto;
+  margin-right: auto;
+	background: transparent;
 }
 
 .blocks {
     display: inline-block;
-    width: 90px;
-    height: 90px;
+    width: 10%;
+    height: 10%;
     margin-top: 2px;
     margin-bottom: 2px;
-    align: center;
-    background: #90B6C9;
+    background: transparent;
 }
 
 #game_info {
@@ -71,43 +70,56 @@ td {
   max-width: 45px;
 }
 
+img {
+  max-height: 100%;
+  max-width: 100%;
+}
+
 .games {
   display: inline;
 
   input[type=submit] {
-    font-size: 15px;
+    font-family: 'Source Code Pro', sans-serif;
+    font-size: 12px;
     border: none;
-    margin: 10px;
-    background: #cceeee;
-    color: #984a97;
-    padding: 10px; 
+    margin: 2%;
+    background: transparent;
+    color: black;
+    border: 2px solid black;
+    padding: 7px; 
     text-transform: uppercase;
-    moz-border-radius: 80px;
-      -webkit-border-radius: 80px;
+    moz-border-radius: 40px;
+      -webkit-border-radius: 40px;
   }
 
   input[type=submit]:hover {
-    color: #9999de;
+    color: black;
+    border: 2px solid black;
+    background: #FFB8A9;
     text-transform: uppercase;
     cursor: pointer;
   }
 
   a {
     text-decoration: none;
-    font-size: 15px;
+    font-family: 'Source Code Pro', sans-serif;
+    font-size: 12px;
     border: none;
-    background: #cceeee;
-    color: #984a97;
-    padding: 10px;
-    margin: 10px;
+    background: transparent;
+    color: black;
+    border: 2px solid black;
+    padding: 7px;
+    margin: 2%;
     line-height: 4 !important;
     text-transform: uppercase;
-    moz-border-radius: 80px;
-      -webkit-border-radius: 80px;
+    moz-border-radius: 40px;
+      -webkit-border-radius: 40px;
   }
 
   a:hover {
-    color: #9999de;
+    color: black;
+    border: 2px solid black;
+    background: #FFB8A9;
     text-transform: uppercase;
     cursor: pointer;
   }

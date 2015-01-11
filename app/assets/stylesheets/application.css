@@ -17,13 +17,65 @@
 
 
 body {
-  font-family: 'Muli', sans-serif;
-  /*background: #ffeaec;*/
+  font-family: 'IM Fell English', serif;
+  background: #faf3e6;
+}
+
+.container:before {
+  content: "";
+  height: 20px;
+  background: url('img-lg-horiz-border.png') repeat-x 0 -2px;
+  background-image: url(http://www.csszengarden.com/218/img-lg-horiz-border.png);
+  background-position-x: 0px;
+  background-position-y: -2px;
+  background-size: 40em;
+  background-repeat-x: repeat;
+  background-repeat-y: no-repeat;
+  background-attachment: initial;
+  background-origin: initial;
+  background-clip: initial;
+  background-color: initial;
+  background-size: 40em;
+  display: block;
+}
+
+.container:after {
+  content: "";
+  height: 20px;
+  background: url('img-lg-horiz-border.png') repeat-x 0 2px;
+  background-image: url(http://www.csszengarden.com/218/img-lg-horiz-border.png);
+  background-position-x: 0px;
+  background-position-y: 12px;
+  background-size: 40em;
+  background-repeat-x: repeat;
+  background-repeat-y: no-repeat;
+  background-attachment: initial;
+  background-origin: initial;
+  background-clip: initial;
+  background-color: initial;
+  background-size: 40em;
+  display: block;
 }
 
 .container {
-  width: 800px;
+  /*width: 100%;*/
+  height: 95%;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
+  width: 99%;
+  background: url('img-lg-vert-border.png') repeat-y top left, url('img-lg-vert-border.png') repeat-y right 100px;
+  background-image: url(http://www.csszengarden.com/218/img-lg-vert-border.png), url(http://www.csszengarden.com/218/img-lg-vert-border.png);
+  background-position-x: 0%, 100%;
+  background-position-y: 0%, 100px;
+  background-size: 0.75em;
+  background-repeat-x: no-repeat, no-repeat;
+  background-repeat-y: repeat, repeat;
+  background-attachment: initial, initial;
+  background-origin: initial, initial;
+  background-clip: initial, initial;
+  background-color: initial;
+  background-size: 0.75em;
+  margin: 0.5em auto;
+  padding: 0 2px;
  }

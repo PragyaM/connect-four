@@ -1,27 +1,23 @@
 <%= render partial: "header" %>
-<div class="games">
+<div id="game" class="games">
   <% if @game.pending? %>
     <p> Game waiting for another player </p>
   <% else %>
     <div id="game_info">
-      <%= image_tag resource_for_player(@game, @active_player.id) %>
-      <% if @game.finished %>
-        <p> <%= game_over_text(@game) %> </p>
-      <% else %>
-        <p> <%= turn_info(@game) %> </p>
-      <% end %>
+      <%= image_tag resource_for_player(@game, @active_player) %>
+      <p> <%= message_for_turn(@game) %> </p>
       <% if alert %>
         <p id="alert"><%= alert %></p>
       <% end %>
     </div>
 
     <div id="grid" data-game-id="<%= @game.id %>" 
-          data-my-turn="<%= @active_player.user == current_user %>">
+          data-my-turn="<%= my_turn?(@game) %>">
 
       <div id="header">
         <% Game::GRID_WIDTH.times do |lane| %>
           <div class="blocks">
-            <% if @active_player.user == current_user && !@game.finished?%>
+            <% if my_turn_and_game_not_over?(@game)%>
               <%= form_for [@game, Turn.new] do |f| %>
                 <%= f.hidden_field(:lane_number, value: lane.to_i) %>
                 <%= f.hidden_field(:player_id, value: @active_player.id) %>

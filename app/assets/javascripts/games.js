@@ -8,7 +8,7 @@ $(function() {
   var pollAndReloadWhenMyTurn = function() {
     $.getJSON("/games/" + gameId).done(function(result) {
       if (result.my_turn) {
-        location.reload();
+        $('#game').load(document.URL +  ' #game');
       }
     });
   };
@@ -24,7 +24,7 @@ $(function() {
   var pollAndReloadWhenGamesUpdated = function() {
     $.getJSON("/games/").done(function(result) {
       if (result.pending_game_count != pending_game_count) {
-        location.reload();
+        $('#play_options').load(document.URL +  ' #play_options');
       }
     });
 
