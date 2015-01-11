@@ -1,14 +1,17 @@
 class CheckConnections
 
   def initialize(grid, game)
+    # puts "#{game.turns.count}"
     @grid = grid
     @game = game
     @last_turn = @game.turns.last
+    puts "last turn: #{@last_turn}"
   end
 
   def call
+    puts "number of turns played: #{@game.turns.size}"
     if @game.turns.size > 0
-      @last_player_id = @last_turn.player_id
+      @last_player = @last_turn.player
 
       @last_turn_x = @last_turn.lane_number
       @last_turn_y = @grid[@last_turn_x].size - 1
@@ -25,7 +28,7 @@ class CheckConnections
     count = 0
     (Game::GRID_WIDTH).times do |lane|
       unless count >= 4
-        @grid[lane][@last_turn_y] == @last_player_id ? count += 1 : count = 0
+        @grid[lane][@last_turn_y] == @last_player ? count += 1 : count = 0
       end
     end
 
@@ -34,7 +37,7 @@ class CheckConnections
 
   def vertical_match?
     @grid[@last_turn_x].chunk do |ele| 
-      ele == @last_player_id 
+      ele == @last_player
     end.detect do |last_player, array| 
       last_player && array.size >= 4
     end
@@ -93,7 +96,7 @@ class CheckConnections
 
     path_length.times do |steps|
       unless count >= 4
-        if @grid[start_x + (x_dir * steps)][start_y + (y_dir * steps)] == @last_player_id
+        if @grid[start_x + (x_dir * steps)][start_y + (y_dir * steps)] == @last_player
           count += 1
         else
           count = 0

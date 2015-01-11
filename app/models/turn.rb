@@ -20,8 +20,6 @@ class Turn < ActiveRecord::Base
     end
   end
 
-  private
-
   def player_double_up?
     unless game.turns.size < 2
       game.turns[-2].player == game.turns.last.player

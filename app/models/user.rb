@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   end
 
   def pending_game_exists?
-    games.select { |game| game.pending? }.size > 0
+    games.any? { |game| game.pending? }
   end
 
   def pending_game

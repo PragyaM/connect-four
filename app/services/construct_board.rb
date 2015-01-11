@@ -5,9 +5,11 @@ class ConstructBoard
 
   def call
     grid = []
+    
     (Game::GRID_WIDTH).times {grid.push []}
+
     @game.turns.each do |turn|
-      grid[turn.lane_number].push turn.player_id
+      grid[turn.lane_number].push turn.player
     end
 
     grid
