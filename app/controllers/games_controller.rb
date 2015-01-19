@@ -21,8 +21,8 @@ class GamesController < ApplicationController
     respond_to do |format|
       format.html do
         @active_player = @game.active_player
-        @grid = ConstructBoard.new(@game).call
-        check_game_over 
+        @board = Board.new(game: @game)
+        check_game_over
       end
 
       format.json do
@@ -47,7 +47,7 @@ class GamesController < ApplicationController
   private
 
   def check_game_over
-    if CheckConnections.new(@grid, @game).call
+    if CheckConnections.new(@game, @board).call
       @game.finished = true
       @game.save!
     end

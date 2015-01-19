@@ -1,34 +1,41 @@
 require "rails_helper"
 
-RSpec.describe CheckConnections  do
-  let(:grid) do 
-    [[],[],[],[],[],[],[]]
-  end
+RSpec.describe CheckConnections do
 
-  fixtures :games, :turns, :players, :users
-  let(:horizontal_win_game) { games(:horizontal_win_game) }
-  let(:vertical_win_game) { games(:vertical_win_game) }
-  let(:diagonal_up_win_game) { games(:diagonal_up_win_game) }
-  let(:diagonal_down_win_game) { games(:diagonal_down_win_game) }
-  let(:horizontal_player) { players(:player_horizontal_win) }
-  let(:vertical_player) { players(:player_vertical_win) }
-  let(:diagonal_up_player) { players(:player_diagonal_up_win) }
-  let(:diagonal_up_opponent) { players(:opponent_diagonal_up_win) }
-  let(:diagonal_down_player) { players(:player_diagonal_down_win) }
-  let(:diagonal_down_opponent) { players(:opponent_diagonal_down_win) }
+  let(:board) { instance_double('Board') }
+
+  let(:last_turn) { instance_double(Turn) }
+  let(:opponent_turn) { instance_double(Turn) }
+  let(:game) { instance_double(Game) }
+  let(:game_turns) { 10.times.collect{ last_turn } }
+  let(:winner) { instance_double(Player) }
+
+  def print_grid(grid)
+    Game::GRID_HEIGHT.downto(0) do |row|
+      row_output = []
+      Game::GRID_WIDTH.times do |column|
+        row_output << (grid[column][row].present? ? 'O' : ' ')
+      end
+      puts row_output.join("|")
+    end
+  end
 
   describe "#call" do
     context "when there are four in a row horizontally" do
       before do
         4.times do |lane|
-          grid[lane].push(horizontal_player)
+          grid[lane].push last_turn
         end
+
+        allow(opponent_turn).to receive(:player).at_least(1).times.and_return winner
+        allow(last_turn).to receive(:player).at_least(1).times.and_return winner
+        allow(game).to receive(:turns).at_least(1).times.and_return game_turns
+        allow(last_turn).to receive(:lane_number).and_return 3
       end
 
-      let(:check_connections) {CheckConnections.new(grid, horizontal_win_game)}
+      let(:check_connections) {CheckConnections.new(grid, game)}
 
       it "finds the match" do
-        # expect(turns(:horizontal_4)).to be false
         expect(check_connections.call).to be_truthy
       end
     end
@@ -36,12 +43,17 @@ RSpec.describe CheckConnections  do
     context "when there are four in a row vertically" do
       before do
         4.times do
-          grid[0].push(vertical_player)
+          grid[0].push last_turn
         end
+
+        allow(opponent_turn).to receive(:player).at_least(1).times.and_return winner
+        allow(last_turn).to receive(:player).at_least(1).times.and_return winner
+        allow(game).to receive(:turns).at_least(1).times.and_return game_turns
+        allow(last_turn).to receive(:lane_number).and_return 0
       end
 
       it "finds the match" do
-        expect(CheckConnections.new(grid, vertical_win_game).call).to be_truthy
+        expect(CheckConnections.new(grid, game).call).to be_truthy
       end
     end
 
@@ -49,13 +61,18 @@ RSpec.describe CheckConnections  do
       before do
         4.times do |lane|
           lane.times do
-            grid[lane].push("diagonal_up_opponent")
+            grid[lane].push opponent_turn
           end
-          grid[lane].push("diagonal_up_player")
-        end
+          grid[lane].push last_turn   
+        end       
+
+        allow(opponent_turn).to receive(:player).at_least(1).times.and_return winner
+        allow(last_turn).to receive(:player).at_least(1).times.and_return winner
+        allow(game).to receive(:turns).at_least(1).times.and_return game_turns
+        allow(last_turn).to receive(:lane_number).and_return 1
       end
       
-      let(:check_connections) {CheckConnections.new(grid, diagonal_up_win_game)}
+      let(:check_connections) {CheckConnections.new(grid, game)}
 
       it "finds the match" do
         expect(check_connections.call).to be_truthy
@@ -65,14 +82,20 @@ RSpec.describe CheckConnections  do
     context "when there are four in a row diagonally downwards" do
       before do
         4.times do |lane|
-          (3 - lane).downto(1) do
-            grid[lane].push(diagonal_down_opponent)
+          (4 - lane).times do
+            grid[lane].push opponent_turn
           end
-          grid[lane].push(diagonal_down_player)
-        end
+          grid[lane].push last_turn   
+        end       
+        print_grid(grid)
+
+        allow(opponent_turn).to receive(:player).at_least(1).times.and_return winner
+        allow(last_turn).to receive(:player).at_least(1).times.and_return winner
+        allow(game).to receive(:turns).at_least(1).times.and_return game_turns
+        allow(last_turn).to receive(:lane_number).and_return 3
       end
       
-      let(:check_connections) {CheckConnections.new(grid, diagonal_down_win_game)}
+      let(:check_connections) {CheckConnections.new(grid, game)}
 
       it "finds the match" do
         expect(check_connections.call).to be_truthy
@@ -80,17 +103,21 @@ RSpec.describe CheckConnections  do
     end
 
     context "when there are no linear connections of four or more coins" do
-      before do
-        grid[3].push(diagonal_down_player)
-        grid[4].push(diagonal_down_opponent)
-        grid[5].push(diagonal_down_player)
-        grid[6].push(diagonal_down_opponent)
+      before do 
+        3.times do |lane|
+          grid[lane].push last_turn
+        end
+
+        allow(opponent_turn).to receive(:player).at_least(1).times.and_return winner
+        allow(last_turn).to receive(:player).at_least(1).times.and_return winner
+        allow(game).to receive(:turns).at_least(1).times.and_return game_turns
+        allow(last_turn).to receive(:lane_number).and_return 1
       end
       
-      let(:check_connections) {CheckConnections.new(grid, diagonal_down_win_game)}
+      let(:check_connections) {CheckConnections.new(grid, game)}
 
       it "finds no match" do
-        expect(check_connections.call).to be false
+        expect(check_connections.call).to be_falsey
       end
     end
   end

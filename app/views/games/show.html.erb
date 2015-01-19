@@ -32,7 +32,7 @@
         <div class="wrap">
           <% Game::GRID_WIDTH.times do |lane| %>
             <div class="blocks">
-              <%= image_tag resource_for_slot(@game, @grid, lane, row) %>
+              <%= image_tag resource_for_slot(@game, @board.grid, lane, row) %>
             </div>
           <% end %>
         </div>

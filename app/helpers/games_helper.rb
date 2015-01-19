@@ -5,7 +5,7 @@ module GamesHelper
     if game.finished
       game_over_text(game)
     else
-      "It is #{player_for_turn(game)} turn"
+      "It is #{player_description_for_turn(game)} turn"
     end
   end
 
@@ -18,10 +18,11 @@ module GamesHelper
   end
   
   def resource_for_slot(game, grid, lane, row)
-    if row >= grid[lane].size
+    if row >= grid[lane].length
       "empty_orange.png"
     else
-      resource_for_player(game, grid[lane][row])
+      puts grid[lane][row]
+      resource_for_player(game, (grid[lane][row]).player)
     end
   end
 
@@ -31,7 +32,7 @@ module GamesHelper
     elsif game.player(2) == player
       "pink_coin.png"
     else
-      "empty.png"
+      "empty_orange.png"
     end
   end
 
@@ -53,7 +54,7 @@ module GamesHelper
 
   private
 
-  def player_for_turn(game)
+  def player_description_for_turn(game)
     my_turn?(game) ? "your" : "#{game.active_player.user.name}'s"
   end
 end

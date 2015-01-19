@@ -1,109 +1,163 @@
 class CheckConnections
 
-  def initialize(grid, game)
-    # puts "#{game.turns.count}"
-    @grid = grid
+  include Step
+
+  def initialize(game, board)
     @game = game
     @last_turn = @game.turns.last
-    puts "last turn: #{@last_turn}"
+    @board = board
+    @win_connections = []
   end
 
   def call
-    puts "number of turns played: #{@game.turns.size}"
-    if @game.turns.size > 0
-      @last_player = @last_turn.player
+    begin
+      @start_point = Point.new(@last_turn.lane_number, (@board.size_of_lane(@last_turn.lane_number)-1))
 
-      @last_turn_x = @last_turn.lane_number
-      @last_turn_y = @grid[@last_turn_x].size - 1
+      Step::PATHS.each_value { |path| check_for_connections(path) }
 
-      horizontal_match? || vertical_match? || diagonal_down_match? || diagonal_up_match?
-    else
+      @win_connections.length > 0
+    rescue
       false
     end
   end
 
   private
 
-  def horizontal_match?
-    count = 0
-    (Game::GRID_WIDTH).times do |lane|
-      unless count >= 4
-        @grid[lane][@last_turn_y] == @last_player ? count += 1 : count = 0
+  def check_for_connections(path)
+    @connected = [@start_point]
+
+    check(path, Step::DIRECTIONS[:BACKWARD])
+
+    if connect_four_found?
+      @win_connections << @connected
+    else
+
+      check(path, Step::DIRECTIONS[:FORWARD])
+
+      if connect_four_found?
+        @win_connections << @connected
       end
     end
-
-    count >= 4
   end
 
-  def vertical_match?
-    @grid[@last_turn_x].chunk do |ele| 
-      ele == @last_player
-    end.detect do |last_player, array| 
-      last_player && array.size >= 4
-    end
-  end
+  def check(path, direction)
+    position = go(@start_point, path, direction)
+    direction_traversal_finished = false
 
-  def diagonal_down_match?
-    if @last_turn_x < (Game::GRID_HEIGHT - 1 - @last_turn_y)
-      @start_pt_x = 0
-      @start_pt_y = @last_turn_y + @last_turn_x
-      @path_length = Game::GRID_WIDTH - (Game::GRID_HEIGHT - @start_pt_y)
+    until !@board.token_at_position?(position) || direction_traversal_finished do
+      element_to_check = @board.element_at(position)
 
-    elsif @last_turn_x > (Game::GRID_HEIGHT - 1 - @last_turn_y)
-      @start_pt_x = @last_turn_x - (Game::GRID_HEIGHT - 1 - @last_turn_y)
-      @start_pt_y = Game::GRID_HEIGHT - 1
-      @path_length = Game::GRID_WIDTH - @start_pt_x
-
-    else
-      @start_pt_x = 0
-      @start_pt_y = Game::GRID_HEIGHT - 1
-      @path_length = Game::GRID_HEIGHT
-    end
-
-    if @path_length >= 4
-      diagonal_match?(@path_length, @start_pt_x, @start_pt_y, 1, -1)
-    else
-      false
-    end
-  end
-
-  def diagonal_up_match?
-    if @last_turn_x < @last_turn_y
-      @start_pt_x = 0
-      @start_pt_y = @last_turn_y - @last_turn_x
-      @path_length = Game::GRID_HEIGHT - @start_pt_y
-
-    elsif @last_turn_x > @last_turn_y
-      @start_pt_x = @last_turn_x - @last_turn_y
-      @start_pt_y = 0
-      @path_length = Game::GRID_WIDTH - @start_pt_x
-
-    else
-      @start_pt_x = 0
-      @start_pt_y = 0
-      @path_length = Game::GRID_HEIGHT
-    end
-
-    if @path_length >= 4
-      diagonal_match?(@path_length, @start_pt_x, @start_pt_y, 1, 1)
-    else
-      false
-    end
-  end
-
-  def diagonal_match?(path_length, start_x, start_y, x_dir, y_dir)
-    count = 0
-
-    path_length.times do |steps|
-      unless count >= 4
-        if @grid[start_x + (x_dir * steps)][start_y + (y_dir * steps)] == @last_player
-          count += 1
+      if element_to_check.player == @last_turn.player
+        if direction == Step::DIRECTIONS[:FORWARD]
+          @connected.push(position)
         else
-          count = 0
+          @connected.unshift(position)
         end
+      else
+        direction_traversal_finished = true
       end
-    end
 
-    count >= 4
+      position = go(position, path, direction)
+    end
   end
+
+  def connect_four_found?
+    @connected.size >= 4
+  end
+
+
+  # def initialize(grid, game)
+  #   @grid = grid
+  #   @game = game
+  #   @last_turn = @game.turns.last
+  # end
+
+  # def call
+  #   if @game.turns.size > 0
+  #     @last_player = @last_turn.player
+
+  #     @last_turn_x = @last_turn.lane_number
+  #     @last_turn_y = @grid[@last_turn_x].size - 1
+
+  #     fill_spaces
+
+  #     horizontal_match? || vertical_match? || diagonal_down_match? || diagonal_up_match?
+  #   else
+  #     false
+  #   end
+  # end
+
+  # private
+
+  # def fill_spaces
+  #   @grid.map! do |lane|  
+  #     Game::GRID_HEIGHT.downto(lane.size) do
+  #       lane.push(nil)
+  #     end
+  #     lane
+  #   end
+  # end
+
+  # def horizontal_match?
+  #   grid_to_check = @grid.transpose
+  #   match?(grid_to_check, @last_turn_y)
+  # end
+
+  # def vertical_match?
+  #   match?(@grid, @last_turn_x)
+  # end
+
+  # def diagonal_up_match?
+  #   grid_to_check = diagonal_transpose(@grid, Game::GRID_WIDTH, Game::GRID_HEIGHT)
+  #   column_to_check = @last_turn_x + (Game::GRID_HEIGHT - @last_turn_y)
+
+  #   match?(grid_to_check, column_to_check)
+  # end
+
+  # def diagonal_down_match?
+  #   transposed_grid = @grid.transpose
+  #   grid_to_check = diagonal_transpose(transposed_grid, Game::GRID_HEIGHT, Game::GRID_WIDTH)
+  #   column_to_check = @last_turn_x + @last_turn_y - 1
+
+  #   puts "  original"
+  #   print_grid(@grid)
+  #   puts "  transposed"
+  #   print_grid(transposed_grid)
+  #   puts "  diagonal"
+  #   print_grid(grid_to_check)
+
+  #   match?(grid_to_check, column_to_check)
+  # end
+
+  # def print_grid(grid)
+  #   grid.size.downto(0) do |row|
+  #     row_output = []
+  #     Game::GRID_WIDTH.times do |column|
+  #       row_output << (grid[column][row].present? ? 'O' : ' ')
+  #     end
+  #     puts row_output.join("|")
+  #   end
+  # end
+
+  # def diagonal_transpose(grid_to_transpose, width, height)
+  #   (-height).upto(width).map do |column_number|
+  #     column = height.times.collect{ |i| grid_to_transpose[i][i - column_number] }
+  #     if column_number > 0
+  #       column = column.drop(column_number)
+  #     end
+  #     column
+  #   end
+  # end
+
+  # def match?(checkable_grid, last_turn_row)
+  #   checkable_grid[last_turn_row].chunk do |ele| 
+  #     begin
+  #       ele.player == @last_player
+  #     rescue
+  #       false
+  #     end
+  #   end.any? do |last_player, array|
+  #     last_player && array.size >= 4
+  #   end
+  # end
 end
