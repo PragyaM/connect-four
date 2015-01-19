@@ -64,72 +64,76 @@ vertical_4:
 
 diagonal_up_1:
   game: diagonal_up_win_game
-  lane_number: 0
+  lane_number: 1
   player: player_diagonal_up_win
 
 diagonal_up_filler_1:
   game: diagonal_up_win_game
-  lane_number: 1
-  player: opponent_diagonal_up_win
+  lane_number: 2
+  player: player_diagonal_up_win
 
 diagonal_up_2:
   game: diagonal_up_win_game
-  lane_number: 1
+  lane_number: 2
   player: player_diagonal_up_win
 
 diagonal_up_filler_2:
   game: diagonal_up_win_game
-  lane_number: 2
-  player: opponent_diagonal_up_win
+  lane_number: 3
+  player: player_diagonal_up_win
 
 diagonal_up_filler_3:
   game: diagonal_up_win_game
-  lane_number: 2
-  player: opponent_diagonal_up_win
+  lane_number: 3
+  player: player_diagonal_up_win
 
 diagonal_up_3:
   game: diagonal_up_win_game
-  lane_number: 2
+  lane_number: 3
   player: player_diagonal_up_win
 
 diagonal_up_filler_4:
   game: diagonal_up_win_game
-  lane_number: 3
+  lane_number: 4
   player: opponent_diagonal_up_win
 
 diagonal_up_filler_5:
   game: diagonal_up_win_game
-  lane_number: 3
-  player: opponent_diagonal_up_win
+  lane_number: 4
+  player: player_diagonal_up_win
 
 diagonal_up_filler_6:
   game: diagonal_up_win_game
-  lane_number: 3
-  player: opponent_diagonal_up_win
+  lane_number: 4
+  player: player_diagonal_up_win
 
 diagonal_up_4:
   game: diagonal_up_win_game
-  lane_number: 3
+  lane_number: 4
   player: player_diagonal_up_win
 
+diagonal_up_5:
+  game: diagonal_up_win_game
+  lane_number: 5
+  player: player_diagonal_up_win
 
-
-diagonal_down_filler_1:
-  game: diagonal_down_win_game
-  lane_number: 0
-  player: opponent_diagonal_down_win
 
 diagonal_down_filler_2:
   game: diagonal_down_win_game
   lane_number: 0
-  player: opponent_diagonal_down_win
+  player: player_diagonal_down_win
 
 diagonal_down_filler_3:
   game: diagonal_down_win_game
   lane_number: 0
-  player: opponent_diagonal_down_win
+  player: player_diagonal_down_opponent
 
-diagonal_down_4:
+diagonal_down_1:
+  game: diagonal_down_win_game
+  lane_number: 0
+  player: player_diagonal_down_win
+
+diagonal_down_filler_1:
   game: diagonal_down_win_game
   lane_number: 0
   player: player_diagonal_down_win
@@ -137,14 +141,14 @@ diagonal_down_4:
 diagonal_down_filler_4:
   game: diagonal_down_win_game
   lane_number: 1
-  player: opponent_diagonal_down_win
+  player: player_diagonal_down_win
 
 diagonal_down_filler_5:
   game: diagonal_down_win_game
   lane_number: 1
-  player: opponent_diagonal_down_win
+  player: player_diagonal_down_win
 
-diagonal_down_3:
+diagonal_down_2:
   game: diagonal_down_win_game
   lane_number: 1
   player: player_diagonal_down_win
@@ -152,7 +156,7 @@ diagonal_down_3:
 diagonal_down_filler_6:
   game: diagonal_down_win_game
   lane_number: 2
-  player: opponent_diagonal_down_win
+  player: player_diagonal_down_win
 
 diagonal_down_3:
   game: diagonal_down_win_game

@@ -16,9 +16,7 @@ $(function() {
   if (gameId && !my_turn) {
     setInterval(pollAndReloadWhenMyTurn, 3000);
   }
-});
 
-$(function() {
   var pending_game_count = $("#play_options").data("pending-game-count");
 
   var pollAndReloadWhenGamesUpdated = function() {
@@ -33,3 +31,4 @@ $(function() {
     setInterval(pollAndReloadWhenGamesUpdated, 3000);
   }
 });
+

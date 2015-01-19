@@ -7,7 +7,15 @@ class TurnsController < ApplicationController
 
     MakeTurn.new(@lane_number, @player, @game).call
     
-    redirect_to @game
+    respond_to do |format|
+      format.html do
+        redirect_to(@game)
+      end
+
+      format.js do
+        render :layout => false
+      end
+    end
   end
 
   private
