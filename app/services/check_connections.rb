@@ -13,7 +13,7 @@ class CheckConnections
     begin
       @start_point = Point.new(@last_turn.lane_number, (@board.size_of_lane(@last_turn.lane_number)-1))
 
-      Step::PATHS.each_value { |path| check_for_connections(path) }
+      Step::PATHS.each_value { |path| check_path(path) }
 
       @win_connections.length > 0
     rescue
@@ -23,16 +23,16 @@ class CheckConnections
 
   private
 
-  def check_for_connections(path)
+  def check_path(path)
     @connected = [@start_point]
 
-    check(path, Step::DIRECTIONS[:BACKWARD])
+    check_direction(path, Step::DIRECTIONS[:BACKWARD])
 
     if connect_four_found?
       @win_connections << @connected
     else
 
-      check(path, Step::DIRECTIONS[:FORWARD])
+      check_direction(path, Step::DIRECTIONS[:FORWARD])
 
       if connect_four_found?
         @win_connections << @connected
@@ -40,7 +40,7 @@ class CheckConnections
     end
   end
 
-  def check(path, direction)
+  def check_direction(path, direction)
     position = go(@start_point, path, direction)
     direction_traversal_finished = false
 
