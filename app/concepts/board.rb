@@ -2,7 +2,7 @@ class Board
   WIDTH = 7
   HEIGHT = 6
 
-  attr_accessor :grid
+  attr_reader :grid
 
   def initialize(game: game)
     @game = game
@@ -10,22 +10,21 @@ class Board
     build_board_state
   end
 
-
   def element_at(point)
-    @grid[point.x][point.y]
+    @grid[point.column][point.row]
   end
 
-  def size_of_lane(lane_number)
+  def number_of_tokens_in_lane(lane_number)
     @grid.fetch(lane_number).size
   end
 
   def out_of_bounds?(point)
-    point.x >= WIDTH || point.x < 0 || point.y >= HEIGHT || point.y < 0
+    point.column >= WIDTH || point.column < 0 || point.row >= HEIGHT || point.row < 0
   end
 
   def token_at_position?(point)
     unless out_of_bounds?(point) || !element_at(point)
-      size_of_lane(point.x) > 0
+      number_of_tokens_in_lane(point.column) > 0
     else
       false
     end

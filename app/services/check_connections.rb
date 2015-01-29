@@ -11,7 +11,7 @@ class CheckConnections
 
   def call
     begin
-      @start_point = Point.new(@last_turn.lane_number, (@board.size_of_lane(@last_turn.lane_number)-1))
+      @start_point = Point.new(@last_turn.lane_number, (@board.number_of_tokens_in_lane(@last_turn.lane_number)-1))
 
       Step::PATHS.each_value { |path| check_path(path) }
 

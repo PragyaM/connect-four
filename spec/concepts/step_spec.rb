@@ -7,8 +7,8 @@ RSpec.describe Step do
   describe '#go' do
     context "when stepping vertical forward from (2, 3)" do
       before do
-        allow(point).to receive(:x).and_return 2
-        allow(point).to receive(:y).and_return 3
+        allow(point).to receive(:column).and_return 2
+        allow(point).to receive(:row).and_return 3
       end
       it "returns new position (2, 4)" do
         expect(Point).to receive(:new).with(2, 4)
@@ -18,8 +18,8 @@ RSpec.describe Step do
 
     context "when stepping vertical backward from (2, 3)" do
       before do
-        allow(point).to receive(:x).and_return 2
-        allow(point).to receive(:y).and_return 3
+        allow(point).to receive(:column).and_return 2
+        allow(point).to receive(:row).and_return 3
       end
       it "returns new position (2, 2)" do
         expect(Point).to receive(:new).with(2, 2)
@@ -29,8 +29,8 @@ RSpec.describe Step do
 
     context "when stepping horizontal forward from (2, 3)" do
       before do
-        allow(point).to receive(:x).and_return 2
-        allow(point).to receive(:y).and_return 3
+        allow(point).to receive(:column).and_return 2
+        allow(point).to receive(:row).and_return 3
       end
       it "returns new position (3, 3)" do
         expect(Point).to receive(:new).with(3, 3)
@@ -40,8 +40,8 @@ RSpec.describe Step do
 
     context "when stepping horizontal backward from (2, 3)" do
       before do
-        allow(point).to receive(:x).and_return 2
-        allow(point).to receive(:y).and_return 3
+        allow(point).to receive(:column).and_return 2
+        allow(point).to receive(:row).and_return 3
       end
       it "returns new position (1, 3)" do
         expect(Point).to receive(:new).with(1, 3)
@@ -51,8 +51,8 @@ RSpec.describe Step do
 
     context "when stepping slope up forward from (2, 3)" do
       before do
-        allow(point).to receive(:x).and_return 2
-        allow(point).to receive(:y).and_return 3
+        allow(point).to receive(:column).and_return 2
+        allow(point).to receive(:row).and_return 3
       end
       it "returns new position (3, 4)" do
         expect(Point).to receive(:new).with(3, 4)
@@ -62,8 +62,8 @@ RSpec.describe Step do
 
     context "when stepping slope up backward from (2, 3)" do
       before do
-        allow(point).to receive(:x).and_return 2
-        allow(point).to receive(:y).and_return 3
+        allow(point).to receive(:column).and_return 2
+        allow(point).to receive(:row).and_return 3
       end
       it "returns new position (1, 2)" do
         expect(Point).to receive(:new).with(1, 2)
@@ -73,8 +73,8 @@ RSpec.describe Step do
 
     context "when stepping slope down forward from (2, 3)" do
       before do
-        allow(point).to receive(:x).and_return 2
-        allow(point).to receive(:y).and_return 3
+        allow(point).to receive(:column).and_return 2
+        allow(point).to receive(:row).and_return 3
       end
       it "returns new position (3, 2)" do
         expect(Point).to receive(:new).with(3, 2)
@@ -84,8 +84,8 @@ RSpec.describe Step do
 
     context "when stepping slope down backward from (2, 3)" do
       before do
-        allow(point).to receive(:x).and_return 2
-        allow(point).to receive(:y).and_return 3
+        allow(point).to receive(:column).and_return 2
+        allow(point).to receive(:row).and_return 3
       end
       it "returns new position (1, 4)" do
         expect(Point).to receive(:new).with(1, 4)

@@ -1,9 +1,9 @@
 class Point
 
-  attr_reader :x, :y
+  attr_reader :column, :row
 
-  def initialize(x, y)
-    @x = x
-    @y = y
+  def initialize(column, row)
+    @column = column
+    @row = row
   end
 end

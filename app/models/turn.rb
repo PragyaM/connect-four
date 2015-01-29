@@ -2,7 +2,7 @@ class Turn < ActiveRecord::Base
   belongs_to :game
   belongs_to :player
 
-  validates :lane_number, inclusion: {in: 0 ... Game::GRID_WIDTH}
+  validates :lane_number, inclusion: {in: 0 ... Board::WIDTH}
   validate  :lane_is_not_full
   validate  :turns_alternate_between_players
 

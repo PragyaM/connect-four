@@ -1,10 +1,10 @@
 module Step
 
   PATHS = {
-    :VERTICAL => {"x" => 0, "y" => 1},
-    :HORIZONTAL => {"x" => 1, "y" => 0},
-    :SLOPE_UP => {"x" => 1, "y" => 1},
-    :SLOPE_DOWN => {"x" => 1, "y" => -1}
+    :VERTICAL => {:row_offset => 0, :column_offset => 1}, #FIXME row_offset, column_offset
+    :HORIZONTAL => {:row_offset => 1, :column_offset => 0},
+    :SLOPE_UP => {:row_offset => 1, :column_offset => 1},
+    :SLOPE_DOWN => {:row_offset => 1, :column_offset => -1}
   }
   
 
@@ -14,10 +14,10 @@ module Step
   }
 
   def go(point, path, direction)
-    x = point.x + (path.fetch("x") * direction)
-    y = point.y + (path.fetch("y") * direction)
+    column = point.column + (path.fetch(:row_offset) * direction)
+    row = point.row + (path.fetch(:column_offset) * direction)
 
-    Point.new(x, y)
+    Point.new(column, row)
   end
 
 end
